@@ -7,7 +7,7 @@ use App\Http\Resources\TravelResource;
 use App\Models\Travel;
 use Illuminate\Http\Request;
 
-class Travelcontroller extends Controller
+class TravelController extends Controller
 {
     public function index()
     {
