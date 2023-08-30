@@ -3,24 +3,17 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ToursListRequest;
+use Illuminate\Http\Request;
 use App\Http\Resources\TourResource;
 use App\Models\Travel;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class TourController extends Controller
 {
-    public function index(Travel $travel, Request $request)
+    public function index(Travel $travel, ToursListRequest $request)
     {
-        $request->validate([
-            'price_from' => 'numeric',
-            'price_to' => 'numeric',
-            'sort_by' => Rule::in(['price']),
-        ]);
-
-
 //        $tours = $travel->tours()
 //            ->when($request->priceFrom, function($query) use($request) {
 //                $query->where('price', '>=', $request->priceFrom * 100);
@@ -49,6 +42,7 @@ class TourController extends Controller
                 AllowedFilter::scope('date_to'),
                 ])
             ->allowedSorts('price')
+            ->orderBy('starting_date')
             ->paginate();
 
         return TourResource::collection($tours);
