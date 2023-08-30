@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -38,5 +39,25 @@ class Tour extends Model
             get: fn($value) =>$value / 100,
             set: fn($value) =>$value * 100,
         );
+    }
+
+    public function scopePriceFrom(Builder $query, $price): Builder
+    {
+        return $query->where('price', '>=', $price * 100);
+    }
+
+    public function scopePriceTo(Builder $query, $price): Builder
+    {
+        return $query->where('price', '<=', $price * 100);
+    }
+
+    public function scopeDateFrom(Builder $query, $date): Builder
+    {
+        return $query->where('starting_date', '>=', $date);
+    }
+
+    public function scopeDateTo(Builder $query, $date): Builder
+    {
+        return $query->where('starting_date', '<=', $date);
     }
 }
