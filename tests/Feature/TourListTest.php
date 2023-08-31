@@ -79,5 +79,6 @@ class TourListTest extends TestCase
             ->get("api/v1/travels/{$travel->slug}/tours/?sort=name&filter[price_to]=ten");
         $response->assertJsonFragment(["filter.price_to" => ["The 'price_to' parameter must be numeric"]]);
         $response->assertJsonFragment(["sort" => ["The 'sort' parameter accepts only 'price' value"]]);
+        $response->assertStatus(422);
     }
 }
