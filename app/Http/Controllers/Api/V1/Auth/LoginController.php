@@ -20,7 +20,7 @@ class LoginController extends Controller
         if (! $user || ! Hash::check($request->password, $user->password)) {
             return response()->json([
                 'error' => 'Provided credentials are incorrect.',
-                'spec' => "for: {$user->email}"
+                'spec' => "for: {$request->email}"
             ], 422);
         }
 
